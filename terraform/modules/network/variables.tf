@@ -1,8 +1,12 @@
-variable "project_name" {
+variable "project" {
   type = string
 }
 
-variable "vpc_sidr" {
+variable "environment" {
+  type = string
+}
+
+variable "vpc_cidr" {
   type = string
 }
 

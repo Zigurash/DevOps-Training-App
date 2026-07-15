@@ -13,7 +13,7 @@ resource "aws_security_group" "public_ec2" {
     protocol = "tcp"
 
     cidr_blocks = [
-      var.my_ip
+      var.allowed_ssh_cidrs[0]
     ]
   }
 

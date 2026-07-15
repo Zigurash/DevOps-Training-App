@@ -8,7 +8,7 @@ resource "aws_vpc_security_group_ingress_rule" "ssh" {
 
 	ip_protocol = "tcp"
 
-	for_each = toset(var.allowed_ssh_cidr)
+	for_each = toset(var.allowed_ssh_cidrs)
 	
 	cidr_ipv4 = each.value
 

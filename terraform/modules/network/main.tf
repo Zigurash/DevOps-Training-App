@@ -4,7 +4,7 @@ resource "aws_vpc" "main" {
 
   enable_dns_support = true
 
-  enable_dns_hostname = true
+  enable_dns_hostnames = true
 
   tags = merge(
     local.common_tags,
@@ -20,7 +20,7 @@ resource "aws_subnet" "public" {
 
   cidr_block = var.public_subnet_cidr
 
-  map_public_id_on_launch = true
+  map_public_ip_on_launch = true
 
   availability_zone = var.availability_zone
 

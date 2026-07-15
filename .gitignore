@@ -1,10 +1,30 @@
-.terraform/
-
+# Terraform
+**/.terraform/*
 *.tfstate
 *.tfstate.*
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+*.tfplan
+tfplan
 
+# Keys
 *.pem
+*.key
+*.Zone.Identifier
 
+# AWS
+.aws/
+
+# Ansible
+*.retry
+
+# IDE
 .vscode/
+.idea/
 
-*.log
+# OS
+.DS_Store
+Thumbs.db
