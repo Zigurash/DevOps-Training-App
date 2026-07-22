@@ -30,3 +30,39 @@ awscliv2.zip
 # OS
 .DS_Store
 Thumbs.db
+
+# APP
+node_modules
+dist
+coverage
+.env
+*.log
+.DS_Store
+application/backend/node_modules
+application/frontend/node_modules
+application/backend/dist
+application/frontend/dist
+application/backend/coverage
+application/frontend/coverage
+# Node
+node_modules/
+dist/
+
+# TypeScript
+*.tsbuildinfo
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.pem
+awscliv2.zip
+
+# Ansible
+*.retry
