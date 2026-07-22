@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum RecordStatus {
+  active
+  completed
+  archived
+}
+
+model Record {
+  id          String       @id @default(uuid())
+  title       String
+  description String?
+  status      RecordStatus @default(active)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@map("records")
+  @@index([status])
+  @@index([title])
+  @@index([createdAt])
+}
+
+model ApplicationEvent {
+  id        String   @id @default(uuid())
+  type      String
+  message   String
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  @@map("application_events")
+  @@index([type])
+  @@index([createdAt])
+}
