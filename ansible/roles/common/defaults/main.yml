@@ -1,2 +1,12 @@
 ---
-# defaults file for roles/common
+common_packages:
+  - curl
+  - wget
+  - git
+  - unzip
+  - htop
+  - tree
+  - vim
+  - net-tools
+  - ca-certificates
+  - software-properties-common

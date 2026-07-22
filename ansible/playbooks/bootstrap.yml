@@ -1,0 +1,8 @@
+---
+- name: Bootstrap servers
+  hosts: k3s_cluster
+  become: true
+
+  roles:
+    - common
+    - docker

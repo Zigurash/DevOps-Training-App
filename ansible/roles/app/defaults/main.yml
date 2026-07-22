@@ -1,0 +1,14 @@
+---
+app_dir: /opt/realworld
+
+app_network: realworld
+
+frontend_image: nginx:alpine
+backend_image: traefik/whoami
+postgres_image: postgres:16-alpine
+
+postgres_db: realworld
+postgres_user: realworld
+postgres_password: change-me
+
+app_port: 3000

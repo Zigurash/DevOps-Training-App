@@ -1,0 +1,7 @@
+---
+- name: Deploy application
+  hosts: all
+  become: true
+
+  roles:
+    - app

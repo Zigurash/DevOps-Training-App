@@ -17,6 +17,7 @@ tfplan
 
 # AWS
 .aws/
+awscliv2.zip
 
 # Ansible
 *.retry
