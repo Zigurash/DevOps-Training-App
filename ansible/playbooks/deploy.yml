@@ -1,6 +1,6 @@
 ---
 - name: Deploy application
-  hosts: all
+  hosts: control
   become: true
 
   roles:

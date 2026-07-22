@@ -1,5 +1,6 @@
 ---
 - name: Create application directory
+  become: true
   ansible.builtin.file:
     path: "{{ app_dir }}"
     state: directory
@@ -7,23 +8,33 @@
     group: ubuntu
     mode: '0755'
 
-- name: Deploy Docker Compose file
-  ansible.builtin.template:
-    src: docker-compose.yml.j2
-    dest: "{{ app_dir }}/docker-compose.yml"
+- name: Synchronize application files
+  become: false
+  ansible.posix.synchronize:
+    src: "{{ playbook_dir }}/../../application/"
+    dest: "{{ app_dir }}/"
+    delete: true
+    recursive: true
+    private_key: "{{ ansible_ssh_private_key_file }}"
+    rsync_opts:
+      - "--exclude=.git"
+      - "--exclude=node_modules"
+      - "--exclude=dist"
+      - "--exclude=*.tsbuildinfo"
+      - "--exclude=.env"
+  delegate_to: localhost
+
+- name: Set application directory ownership
+  become: true
+  ansible.builtin.file:
+    path: /opt/realworld
     owner: ubuntu
     group: ubuntu
-    mode: '0644'
+    recurse: true
 
-- name: Deploy Nginx configuration
-  ansible.builtin.template:
-    src: nginx.conf.j2
-    dest: "{{ app_dir }}/nginx.conf"
-    owner: ubuntu
-    group: ubuntu
-    mode: '0644'
-
-- name: Start application stack
+- name: Build and start application stack
   community.docker.docker_compose_v2:
-    project_src: "{{ app_dir }}"
+    project_src: /opt/realworld
     state: present
+    build: always
+
