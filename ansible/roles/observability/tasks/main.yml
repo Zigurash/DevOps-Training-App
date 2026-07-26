@@ -1,0 +1,39 @@
+---
+- name: Create observability derictories
+  become: true
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: ubuntu
+    group: ubuntu
+    mode: '0755'
+  loop:
+    - "{{ observability_dir }}"
+    - "{{ observability_dir }}/prometheus"
+    - "{{ observability_dir }}/grafana"
+    - "{{ observability_dir }}/loki"
+    - "{{ observability_dir }}/alloy"
+
+- name: Deploy Prometheus configuration
+  become: true
+  ansible.builtin.template:
+    src: prometheus.yml.j2
+    dest: "{{ observability_dir }}/prometheus/prometheus.yml"
+    owner: ubuntu
+    group: ubuntu
+    mode: "0644"
+
+- name: Deploy Observability Docker Compose file
+  become: true
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ observability_dir }}/docker-compose.yml"
+    owner: ubuntu
+    group: ubuntu
+    mode: '0644'
+
+- name: Start Observability Stack
+  become: true
+  community.docker.docker_compose_v2:
+    project_src: "{{ observability_dir }}"
+    state: present

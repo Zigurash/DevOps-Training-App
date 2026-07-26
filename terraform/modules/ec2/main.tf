@@ -21,11 +21,9 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "main" {
-
   ami = data.aws_ami.ubuntu.id
 
   instance_type = var.instance_type
-
   subnet_id = var.subnet_id
 
   vpc_security_group_ids = [
@@ -33,10 +31,14 @@ resource "aws_instance" "main" {
   ]
 
   key_name = var.key_name
-
   iam_instance_profile = var.instance_profile_name
-
   user_data = file("${path.module}/user_data.sh")
+
+  lifecycle {
+    ignore_changes = [
+	ami
+    ]
+  }
 
   tags = {
 

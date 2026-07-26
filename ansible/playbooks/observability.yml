@@ -1,0 +1,7 @@
+---
+- name: Deploy observability stack
+  hosts: all
+  become: true
+
+  roles:
+    - observability

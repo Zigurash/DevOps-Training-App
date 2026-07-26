@@ -1,0 +1,16 @@
+---
+observability_dir: /opt/observability
+
+prometheus_image: prom/prometheus:v3.5.0
+grafana_image: grafana/grafana:12.1.1
+node_exporter_image: prom/node-exporter:v1.9.1
+cadvisor_image: gcr.io/cadvisor/cadvisor:v0.53.0
+loki_image: grafana/loki:3.5.3
+alloy_image: grafana/alloy:v1.10.2
+
+grafana_admin_user: admin
+grafana_admin_password: admin
+
+prometheus_port: 9090
+grafana_port: 3000
+loki_port: 3100

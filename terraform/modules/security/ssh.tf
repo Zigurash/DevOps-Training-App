@@ -1,16 +1,16 @@
 resource "aws_vpc_security_group_ingress_rule" "ssh" {
 
-	security_group_id = aws_security_group.ec2.id
+  security_group_id = aws_security_group.ec2.id
 
-	from_port = 22
+  from_port = 22
 
-	to_port = 22
+  to_port = 22
 
-	ip_protocol = "tcp"
+  ip_protocol = "tcp"
 
-	for_each = toset(var.allowed_ssh_cidrs)
-	
-	cidr_ipv4 = each.value
+  for_each = toset(var.allowed_ssh_cidrs)
 
-	description = "SSH access"
+  cidr_ipv4 = each.value
+
+  description = "SSH access"
 }

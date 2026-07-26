@@ -1,0 +1,73 @@
+services:
+
+  prometheus:
+    image: {{ prometheus_image }}
+    container_name: observability-prometheus
+    restart: unless-stopped
+
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=15d'
+
+    volumes:
+      - {{ observability_dir }}/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+
+    ports:
+      - "{{ prometheus_port }}:9090"
+
+    networks:
+      - observability
+
+    depends_on:
+      - node-exporter
+
+
+  node-exporter:
+    image: {{ node_exporter_image }}
+    container_name: observability-node-exporter
+    restart: unless-stopped
+
+    command:
+      - '--path.rootfs=/host'
+
+    pid: host
+
+    volumes:
+      - '/:/host:ro,rslave'
+
+    networks:
+      - observability
+
+
+  grafana:
+    image: {{ grafana_image }}
+    container_name: observability-grafana
+    restart: unless-stopped
+
+    environment:
+      GF_SECURITY_ADMIN_USER: "{{ grafana_admin_user }}"
+      GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_admin_password }}"
+
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+    ports:
+      - "{{ grafana_port }}:3000"
+
+    networks:
+      - observability
+
+    depends_on:
+      - prometheus
+
+
+networks:
+  observability:
+    driver: bridge
+
+
+volumes:
+  prometheus_data:
+  grafana_data:
