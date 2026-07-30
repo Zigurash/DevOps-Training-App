@@ -1,0 +1,11 @@
+[control]
+control-node ansible_connection=community.aws.aws_ssm \
+ansible_aws_ssm_instance_id=i-0222e3b01a4c5225e \
+ansible_aws_ssm_region=ap-southeast-1 \
+ansible_aws_ssm_profile=default
+
+[workers]
+
+[k3s_cluster:children]
+control
+workers

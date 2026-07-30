@@ -63,6 +63,23 @@ services:
       - prometheus
 
 
+  cadvisor:
+    image: {{ cadvisor_image }}
+    container_name: observability-cadvisor
+    restart: unless-stopped
+
+    privileged: true
+
+    volumes:
+        - /:/rootfs:ro
+        - /var/run:/var/run:ro
+        - /sys:/sys:ro
+        - /var/lib/docker:/var/lib/docker:ro
+        - /dev/disk:/dev/disk:ro
+
+    networks:
+      - observability
+
 networks:
   observability:
     driver: bridge

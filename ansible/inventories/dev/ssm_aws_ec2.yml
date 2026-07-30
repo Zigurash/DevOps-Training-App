@@ -1,0 +1,29 @@
+plugin: amazon.aws.aws_ec2
+
+regions:
+  - ap-southeast-1
+
+profile: ansible
+
+filters:
+  tag:Project:
+    - realworld
+  tag:Environment:
+    - dev
+  instance-state-name:
+    - running
+
+hostnames:
+  - instance-id
+
+compose:
+  ansible_connection: '"community.aws.aws_ssm"'
+  ansible_aws_ssm_instance_id: instance_id
+  ansible_aws_ssm_region: placement.region
+  ansible_aws_ssm_profile: '"ansible"'
+
+keyed_groups:
+  - key: tags.Environment
+    prefix: env
+  - key: tags.Project
+    prefix: project

@@ -1,0 +1,337 @@
+> COMMUNITY.AWS.AWS_SSM    (/usr/lib/python3/dist-packages/ansible_collections/community/aws/plugins/connection/aws_ssm.py)
+
+        This connection plugin allows Ansible to execute tasks on an EC2 instance via an AWS SSM
+        Session.
+
+OPTIONS (= is mandatory):
+
+- access_key_id
+        The STS access key to use when connecting via session-manager.
+        set_via:
+          env:
+          - name: AWS_ACCESS_KEY_ID
+          vars:
+          - name: ansible_aws_ssm_access_key_id
+        default: null
+        added in: version 1.3.0 of community.aws
+
+
+- bucket_endpoint_url
+        The S3 endpoint URL of the bucket used for file transfers.
+        set_via:
+          vars:
+          - name: ansible_aws_ssm_bucket_endpoint_url
+        default: null
+        added in: version 5.3.0 of community.aws
+
+
+- bucket_name
+        The name of the S3 bucket used for file transfers.
+        set_via:
+          vars:
+          - name: ansible_aws_ssm_bucket_name
+        default: null
+
+- bucket_sse_kms_key_id
+        KMS key id to use when encrypting objects using `bucket_sse_mode=aws:kms'. Ignored
+        otherwise.
+        set_via:
+          vars:
+          - name: ansible_aws_ssm_bucket_sse_kms_key_id
+        default: null
+        added in: version 2.2.0 of community.aws
+
+
+- bucket_sse_mode
+        Server-side encryption mode to use for uploads on the S3 bucket used for file transfer.
+        set_via:
+          vars:
+          - name: ansible_aws_ssm_bucket_sse_mode
+        choices: [AES256, 'aws:kms']
+        default: null
+        added in: version 2.2.0 of community.aws
+
+
+- instance_id
+        The EC2 instance ID.
+        set_via:
+          vars:
+          - name: ansible_aws_ssm_instance_id
+        default: null
+
+- plugin
+        This defines the location of the session-manager-plugin binary.
+        set_via:
+          vars:
+          - name: ansible_aws_ssm_plugin
+        default: /usr/local/bin/session-manager-plugin
+
+- profile
+        Sets AWS profile to use.
+        set_via:
+          env:
+          - name: AWS_PROFILE
+          vars:
+          - name: ansible_aws_ssm_profile
+        default: null
+        added in: version 1.5.0 of community.aws
+
+
+- reconnection_retries
+        Number of attempts to connect.
+        set_via:
+          vars:
+          - name: ansible_aws_ssm_retries
+        default: 3
+        type: integer
+
+- region
+        The region the EC2 instance is located.
+        set_via:
+          env:
+          - name: AWS_REGION
+          - name: AWS_DEFAULT_REGION
+          vars:
+          - name: ansible_aws_ssm_region
+        default: us-east-1
+
+- s3_addressing_style
+        The addressing style to use when using S3 URLs.
+        When the S3 bucket isn't in the same region as the Instance explicitly setting the
+        addressing style to 'virtual' may be necessary https://repost.aws/knowledge-
+        center/s3-http-307-response as this forces the use of a specific endpoint.
+        set_via:
+          vars:
+          - name: ansible_aws_ssm_s3_addressing_style
+        choices: [path, virtual, auto]
+        default: auto
+        added in: version 5.2.0 of community.aws
+
+
+- secret_access_key
+        The STS secret key to use when connecting via session-manager.
+        set_via:
+          env:
+          - name: AWS_SECRET_ACCESS_KEY
+          vars:
+          - name: ansible_aws_ssm_secret_access_key
+        default: null
+        added in: version 1.3.0 of community.aws
+
+
+- session_token
+        The STS session token to use when connecting via session-manager.
+        set_via:
+          env:
+          - name: AWS_SESSION_TOKEN
+          vars:
+          - name: ansible_aws_ssm_session_token
+        default: null
+        added in: version 1.3.0 of community.aws
+
+
+- ssm_document
+        SSM Session document to use when connecting.
+        To configure the remote_user (when `become=False', it is possible to use an SSM Session
+        document and define the `runAsEnabled' and `runAsDefaultUser' parameters.  See also
+        https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-schema.html
+        set_via:
+          vars:
+          - name: ansible_aws_ssm_document
+        default: null
+        added in: version 5.2.0 of community.aws
+
+
+- ssm_timeout
+        Connection timeout seconds.
+        set_via:
+          vars:
+          - name: ansible_aws_ssm_timeout
+        default: 60
+        type: integer
+
+
+NOTES:
+      * The `community.aws.aws_ssm' connection plugin does not support using the
+        ``remote_user`` and ``ansible_user`` variables to configure the remote user.  The
+        ``become_user`` parameter should be used to configure which user to run commands
+        as.  Remote commands will often default to running as the ``ssm-agent`` user,
+        however this will also depend on how SSM has been configured.
+      * This plugin requires an S3 bucket to send files to/from the remote instance. This
+        is required even for modules which do not explicitly send files (such as the
+        `shell' or `command' modules), because Ansible sends over the `.py' files of the
+        module itself, via S3.
+      * Files sent via S3 will be named in S3 with the EC2 host ID (e.g. `i-123abc/') as
+        the prefix.
+      * The files in S3 will be deleted by the end of the playbook run. If the play is
+        terminated ungracefully, the files may remain in the bucket. If the bucket has
+        versioning enabled, the files will remain in version history. If your tasks
+        involve sending secrets to/from the remote instance (e.g. within a `shell'
+        command, or a SQL password in the `community.postgresql.postgresql_query' module)
+        then those passwords will be included in plaintext in those files in S3
+        indefinitely, visible to anyone with access to that bucket. Therefore it is
+        recommended to use a bucket with versioning disabled/suspended.
+      * The files in S3 will be deleted even if the `keep_remote_files' setting is `true'.
+
+
+REQUIREMENTS:  The remote EC2 instance must be running the AWS Systems Manager Agent (SSM
+        Agent). https://docs.aws.amazon.com/systems-
+        manager/latest/userguide/session-manager-getting-started.html, The
+        control machine must have the AWS session manager plugin installed.
+        https://docs.aws.amazon.com/systems-manager/latest/userguide/session-
+        manager-working-with-install-plugin.html, The remote EC2 Linux instance
+        must have curl installed., The remote EC2 Linux instance and the
+        controller both need network connectivity to S3., The remote instance
+        does not require IAM credentials for S3. This module will generate a
+        presigned URL for S3 from the controller, and then will pass that URL to
+        the target over SSM, telling the target to download/upload from S3 with
+        `curl'., The controller requires IAM permissions to upload, download and
+        delete files from the specified S3 bucket. This includes `s3:GetObject`,
+        `s3:PutObject`, `s3:ListBucket`, `s3:DeleteObject` and
+        `s3:GetBucketLocation`.
+
+AUTHOR: Pat Sharkey (@psharkey) <psharkey@cleo.com>, HanumanthaRao MVL (@hanumantharaomvl) <hanumanth@flux7.com>, Gaurav Ashtikar (@gau1991) <gaurav.ashtikar@flux7.com>
+
+NAME: aws_ssm
+
+EXAMPLES:
+
+---
+# Wait for SSM Agent to be available on the Instance
+- name: Wait for connection to be available
+  vars:
+    ansible_connection: aws_ssm
+    ansible_aws_ssm_bucket_name: nameofthebucket
+    ansible_aws_ssm_region: us-west-2
+    # When the S3 bucket isn't in the same region as the Instance
+    # Explicitly setting the addressing style to 'virtual' may be necessary
+    # https://repost.aws/knowledge-center/s3-http-307-response
+    ansible_aws_ssm_s3_addressing_style: virtual
+  tasks:
+    - name: Wait for connection
+      wait_for_connection:
+
+# Stop Spooler Process on Windows Instances
+- name: Stop Spooler Service on Windows Instances
+  vars:
+    ansible_connection: aws_ssm
+    ansible_shell_type: powershell
+    ansible_aws_ssm_bucket_name: nameofthebucket
+    ansible_aws_ssm_region: us-east-1
+  tasks:
+    - name: Stop spooler service
+      win_service:
+        name: spooler
+        state: stopped
+
+# Install a Nginx Package on Linux Instance
+- name: Install a Nginx Package
+  vars:
+    ansible_connection: aws_ssm
+    ansible_aws_ssm_bucket_name: nameofthebucket
+    ansible_aws_ssm_region: us-west-2
+  tasks:
+    - name: Install a Nginx Package
+      yum:
+        name: nginx
+        state: present
+
+# Create a directory in Windows Instances
+- name: Create a directory in Windows Instance
+  vars:
+    ansible_connection: aws_ssm
+    ansible_shell_type: powershell
+    ansible_aws_ssm_bucket_name: nameofthebucket
+    ansible_aws_ssm_region: us-east-1
+  tasks:
+    - name: Create a Directory
+      win_file:
+        path: C:\Windows\temp
+        state: directory
+
+---
+
+# Making use of Dynamic Inventory Plugin
+# =======================================
+# # aws_ec2.yml (Dynamic Inventory - Linux)
+# plugin: aws_ec2
+# regions:
+#   - us-east-1
+# hostnames:
+#   - instance-id
+# # This will return the Instances with the tag "SSMTag" set to "ssmlinux"
+# filters:
+#   tag:SSMTag: ssmlinux
+# -----------------------
+- name: install aws-cli
+  hosts: all
+  gather_facts: false
+  vars:
+    ansible_connection: aws_ssm
+    ansible_aws_ssm_bucket_name: nameofthebucket
+    ansible_aws_ssm_region: us-east-1
+  tasks:
+    - name: aws-cli
+      raw: yum install -y awscli
+      tags: aws-cli
+
+---
+
+# Execution: ansible-playbook linux.yaml -i aws_ec2.yml
+# =====================================================
+# # aws_ec2.yml (Dynamic Inventory - Windows)
+# plugin: aws_ec2
+# regions:
+#   - us-east-1
+# hostnames:
+#   - instance-id
+# # This will return the Instances with the tag "SSMTag" set to "ssmwindows"
+# filters:
+#   tag:SSMTag: ssmwindows
+# -----------------------
+- name: Create a dir.
+  hosts: all
+  gather_facts: false
+  vars:
+    ansible_connection: aws_ssm
+    ansible_shell_type: powershell
+    ansible_aws_ssm_bucket_name: nameofthebucket
+    ansible_aws_ssm_region: us-east-1
+  tasks:
+    - name: Create the directory
+      win_file:
+        path: C:\Temp\SSM_Testing5
+        state: directory
+
+---
+
+# Execution:  ansible-playbook win_file.yaml -i aws_ec2.yml
+# The playbook tasks will get executed on the instance ids returned from the dynamic inventory plugin using ssm connection.
+
+# Install a Nginx Package on Linux Instance; with specific SSE CMK used for the file transfer
+- name: Install a Nginx Package
+  vars:
+    ansible_connection: aws_ssm
+    ansible_aws_ssm_bucket_name: nameofthebucket
+    ansible_aws_ssm_region: us-west-2
+    ansible_aws_ssm_bucket_sse_mode: 'aws:kms'
+    ansible_aws_ssm_bucket_sse_kms_key_id: alias/kms-key-alias
+  tasks:
+    - name: Install a Nginx Package
+      yum:
+        name: nginx
+        state: present
+
+# Install a Nginx Package on Linux Instance; using the specified SSM document
+- name: Install a Nginx Package
+  vars:
+    ansible_connection: aws_ssm
+    ansible_aws_ssm_bucket_name: nameofthebucket
+    ansible_aws_ssm_region: us-west-2
+    ansible_aws_ssm_document: nameofthecustomdocument
+  tasks:
+    - name: Install a Nginx Package
+      yum:
+        name: nginx
+        state: present
+

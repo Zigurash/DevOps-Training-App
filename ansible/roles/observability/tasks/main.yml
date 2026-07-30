@@ -22,6 +22,7 @@
     owner: ubuntu
     group: ubuntu
     mode: "0644"
+  notify: Restart observability stack
 
 - name: Deploy Observability Docker Compose file
   become: true
@@ -37,3 +38,4 @@
   community.docker.docker_compose_v2:
     project_src: "{{ observability_dir }}"
     state: present
+    recreate: always

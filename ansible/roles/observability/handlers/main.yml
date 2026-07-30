@@ -1,2 +1,7 @@
 ---
-# handlers file for roles/observability
+- name: Restart observability stack
+  become: true
+  community.docker.docker_compose_v2:
+    project_src: "{{ observability_dir }}"
+    state: present
+    recreate: always
