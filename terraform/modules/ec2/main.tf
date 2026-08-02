@@ -43,6 +43,10 @@ resource "aws_instance" "main" {
   tags = {
 
     Name = "${var.project}-${var.environment}-ec2"
+    Project     = var.project
+    Environment = var.environment
+    Role        = "control"
+    ManagedBy   = "Terraform"
 
   }
 

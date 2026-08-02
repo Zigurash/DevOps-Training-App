@@ -1,0 +1,563 @@
+module.ec2.data.aws_ami.ubuntu: Reading...
+module.ansible-ssm.data.aws_caller_identity.current: Reading...
+module.iam.aws_iam_role.ec2: Refreshing state... [id=realworld-dev-ec2-role]
+module.network.aws_vpc.main: Refreshing state... [id=vpc-06a1785f1aaafb207]
+module.ansible-ssm.data.aws_caller_identity.current: Read complete after 0s [id=583664562769]
+module.ansible-ssm.aws_s3_bucket.ansible_ssm: Refreshing state... [id=realworld-dev-ansible-ssm-583664562769]
+module.ec2.data.aws_ami.ubuntu: Read complete after 0s [id=ami-0ed6a65b84536f6ce]
+module.network.aws_internet_gateway.main: Refreshing state... [id=igw-0fd45ed750c72bbfe]
+module.network.aws_subnet.public: Refreshing state... [id=subnet-06fdcf05a65a0b9fc]
+module.network.aws_route_table.public: Refreshing state... [id=rtb-077cae95cd77fd21f]
+module.security.aws_security_group.ec2: Refreshing state... [id=sg-0ef7cdb54b6737b7e]
+local_file.ansible_vars: Refreshing state... [id=742f247b62c022f2757492a3844d7bd20ba10d86]
+module.network.aws_route_table_association.public: Refreshing state... [id=rtbassoc-0a533154379e4f607]
+module.security.aws_vpc_security_group_egress_rule.all: Refreshing state... [id=sgr-0c8e6565fcac3cf77]
+module.security.aws_vpc_security_group_ingress_rule.prometheus: Refreshing state... [id=sgr-01593533797f45551]
+module.security.aws_vpc_security_group_ingress_rule.grafana: Refreshing state... [id=sgr-0d1df151340bca437]
+module.security.aws_vpc_security_group_ingress_rule.ssh["58.10.181.189/32"]: Refreshing state... [id=sgr-0f116ecdaf11d38d3]
+module.security.aws_vpc_security_group_ingress_rule.https: Refreshing state... [id=sgr-027f52cb93363c066]
+module.security.aws_vpc_security_group_ingress_rule.http: Refreshing state... [id=sgr-024c93329fb383ba9]
+module.iam.aws_iam_role_policy_attachment.ssm: Refreshing state... [id=realworld-dev-ec2-role/arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore]
+module.iam.aws_iam_instance_profile.ec2: Refreshing state... [id=realworld-dev-instance-profile]
+module.ec2.aws_instance.main: Refreshing state... [id=i-0222e3b01a4c5225e]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+  # local_file.ansible_vars will be created
+  + resource "local_file" "ansible_vars" {
+      + content              = (known after apply)
+      + content_base64sha256 = (known after apply)
+      + content_base64sha512 = (known after apply)
+      + content_md5          = (known after apply)
+      + content_sha1         = (known after apply)
+      + content_sha256       = (known after apply)
+      + content_sha512       = (known after apply)
+      + directory_permission = "0777"
+      + file_permission      = "0777"
+      + filename             = "./../../../ansible/inventories/k8s-dev/group_vars/all.yml"
+      + id                   = (known after apply)
+    }
+
+  # module.ansible-ssm.aws_s3_bucket.ansible_ssm must be replaced
+-/+ resource "aws_s3_bucket" "ansible_ssm" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      ~ arn                         = "arn:aws:s3:::realworld-dev-ansible-ssm-583664562769" -> (known after apply)
+      ~ bucket                      = "realworld-dev-ansible-ssm-583664562769" -> "realworld-k8s-dev-ansible-ssm-583664562769" # forces replacement
+      ~ bucket_domain_name          = "realworld-dev-ansible-ssm-583664562769.s3.amazonaws.com" -> (known after apply)
+      ~ bucket_namespace            = "global" -> (known after apply)
+      + bucket_prefix               = (known after apply)
+      ~ bucket_region               = "ap-southeast-1" -> (known after apply)
+      ~ bucket_regional_domain_name = "realworld-dev-ansible-ssm-583664562769.s3.ap-southeast-1.amazonaws.com" -> (known after apply)
+      ~ hosted_zone_id              = "Z3O0J2DXBE1FTB" -> (known after apply)
+      ~ id                          = "realworld-dev-ansible-ssm-583664562769" -> (known after apply)
+      ~ object_lock_enabled         = false -> (known after apply)
+      + policy                      = (known after apply)
+      ~ request_payer               = "BucketOwner" -> (known after apply)
+      ~ tags                        = {
+          ~ "Environment" = "dev" -> "k8s-dev"
+            "ManagedBy"   = "Terraform"
+          ~ "Name"        = "realworld-dev-ansible-ssm" -> "realworld-k8s-dev-ansible-ssm"
+        }
+      ~ tags_all                    = {
+          ~ "Environment" = "dev" -> "k8s-dev"
+          ~ "Name"        = "realworld-dev-ansible-ssm" -> "realworld-k8s-dev-ansible-ssm"
+            # (1 unchanged element hidden)
+        }
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+        # (2 unchanged attributes hidden)
+
+      ~ cors_rule (known after apply)
+
+      ~ grant (known after apply)
+      - grant {
+          - id          = "38ce31a4c78874fcd1541e33e4a702df263e828f575394f94ab44984084d4287" -> null
+          - permissions = [
+              - "FULL_CONTROL",
+            ] -> null
+          - type        = "CanonicalUser" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      ~ lifecycle_rule (known after apply)
+
+      ~ logging (known after apply)
+
+      ~ object_lock_configuration (known after apply)
+
+      ~ replication_configuration (known after apply)
+
+      ~ server_side_encryption_configuration (known after apply)
+      - server_side_encryption_configuration {
+          - rule {
+              - bucket_key_enabled = false -> null
+
+              - apply_server_side_encryption_by_default {
+                  - sse_algorithm     = "AES256" -> null
+                    # (1 unchanged attribute hidden)
+                }
+            }
+        }
+
+      ~ versioning (known after apply)
+      - versioning {
+          - enabled    = false -> null
+          - mfa_delete = false -> null
+        }
+
+      ~ website (known after apply)
+    }
+
+  # module.ec2.aws_instance.main must be replaced
+-/+ resource "aws_instance" "main" {
+      ~ ami                                  = "ami-0ef5fc922c3794ed9" -> "ami-0ed6a65b84536f6ce"
+      ~ arn                                  = "arn:aws:ec2:ap-southeast-1:583664562769:instance/i-0222e3b01a4c5225e" -> (known after apply)
+      ~ associate_public_ip_address          = false -> (known after apply)
+      ~ availability_zone                    = "ap-southeast-1a" -> (known after apply)
+      ~ disable_api_stop                     = false -> (known after apply)
+      ~ disable_api_termination              = false -> (known after apply)
+      ~ ebs_optimized                        = false -> (known after apply)
+      + enable_primary_ipv6                  = (known after apply)
+      - hibernation                          = false -> null
+      + host_id                              = (known after apply)
+      + host_resource_group_arn              = (known after apply)
+      ~ iam_instance_profile                 = "realworld-dev-instance-profile" -> "realworld-k8s-dev-instance-profile"
+      ~ id                                   = "i-0222e3b01a4c5225e" -> (known after apply)
+      ~ instance_initiated_shutdown_behavior = "stop" -> (known after apply)
+      + instance_lifecycle                   = (known after apply)
+      ~ instance_state                       = "stopped" -> (known after apply)
+      ~ instance_type                        = "t3.micro" -> "t3.small"
+      ~ ipv6_address_count                   = 0 -> (known after apply)
+      ~ ipv6_addresses                       = [] -> (known after apply)
+      ~ monitoring                           = false -> (known after apply)
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      + placement_group_id                   = (known after apply)
+      ~ placement_partition_number           = 0 -> (known after apply)
+      ~ primary_network_interface_id         = "eni-0e74c1ef41d27121f" -> (known after apply)
+      ~ private_dns                          = "ip-10-0-1-234.ap-southeast-1.compute.internal" -> (known after apply)
+      ~ private_ip                           = "10.0.1.234" -> (known after apply)
+      + public_dns                           = (known after apply)
+      + public_ip                            = (known after apply)
+      ~ secondary_private_ips                = [] -> (known after apply)
+      ~ security_groups                      = [] -> (known after apply)
+      + spot_instance_request_id             = (known after apply)
+      ~ subnet_id                            = "subnet-06fdcf05a65a0b9fc" -> (known after apply) # forces replacement
+      ~ tags                                 = {
+          ~ "Environment" = "dev" -> "k8s-dev"
+            "ManagedBy"   = "Terraform"
+          ~ "Name"        = "realworld-dev-ec2" -> "realworld-k8s-dev-ec2"
+            "Project"     = "realworld"
+            "Role"        = "control"
+        }
+      ~ tags_all                             = {
+          ~ "Environment" = "dev" -> "k8s-dev"
+          ~ "Name"        = "realworld-dev-ec2" -> "realworld-k8s-dev-ec2"
+            # (3 unchanged elements hidden)
+        }
+      ~ tenancy                              = "default" -> (known after apply)
+      + user_data_base64                     = (known after apply)
+      ~ vpc_security_group_ids               = [
+          - "sg-0ef7cdb54b6737b7e",
+        ] -> (known after apply)
+        # (7 unchanged attributes hidden)
+
+      ~ capacity_reservation_specification (known after apply)
+      - capacity_reservation_specification {
+          - capacity_reservation_preference = "open" -> null
+        }
+
+      ~ cpu_options (known after apply)
+      - cpu_options {
+          - core_count            = 1 -> null
+          - threads_per_core      = 2 -> null
+            # (2 unchanged attributes hidden)
+        }
+
+      - credit_specification {
+          - cpu_credits = "unlimited" -> null
+        }
+
+      ~ ebs_block_device (known after apply)
+
+      ~ enclave_options (known after apply)
+      - enclave_options {
+          - enabled = false -> null
+        }
+
+      ~ ephemeral_block_device (known after apply)
+
+      ~ instance_market_options (known after apply)
+
+      ~ maintenance_options (known after apply)
+      - maintenance_options {
+          - auto_recovery = "default" -> null
+        }
+
+      ~ metadata_options (known after apply)
+      - metadata_options {
+          - http_endpoint               = "enabled" -> null
+          - http_protocol_ipv6          = "disabled" -> null
+          - http_put_response_hop_limit = 2 -> null
+          - http_tokens                 = "required" -> null
+          - instance_metadata_tags      = "disabled" -> null
+        }
+
+      ~ network_interface (known after apply)
+
+      ~ primary_network_interface (known after apply)
+      - primary_network_interface {
+          - delete_on_termination = true -> null
+          - network_interface_id  = "eni-0e74c1ef41d27121f" -> null
+        }
+
+      ~ private_dns_name_options (known after apply)
+      - private_dns_name_options {
+          - enable_resource_name_dns_a_record    = false -> null
+          - enable_resource_name_dns_aaaa_record = false -> null
+          - hostname_type                        = "ip-name" -> null
+        }
+
+      ~ root_block_device (known after apply)
+      - root_block_device {
+          - delete_on_termination = true -> null
+          - device_name           = "/dev/sda1" -> null
+          - encrypted             = false -> null
+          - iops                  = 3000 -> null
+          - tags                  = {} -> null
+          - tags_all              = {} -> null
+          - throughput            = 125 -> null
+          - volume_id             = "vol-0394fd837bc85d52d" -> null
+          - volume_size           = 20 -> null
+          - volume_type           = "gp3" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      ~ secondary_network_interface (known after apply)
+    }
+
+  # module.iam.aws_iam_instance_profile.ec2 must be replaced
+-/+ resource "aws_iam_instance_profile" "ec2" {
+      ~ arn         = "arn:aws:iam::583664562769:instance-profile/realworld-dev-instance-profile" -> (known after apply)
+      ~ create_date = "2026-07-13T11:39:33Z" -> (known after apply)
+      ~ id          = "realworld-dev-instance-profile" -> (known after apply)
+      ~ name        = "realworld-dev-instance-profile" -> "realworld-k8s-dev-instance-profile" # forces replacement
+      + name_prefix = (known after apply)
+      ~ role        = "realworld-dev-ec2-role" -> "realworld-k8s-dev-ec2-role"
+      - tags        = {} -> null
+      ~ tags_all    = {} -> (known after apply)
+      ~ unique_id   = "AIPAYPZI6OJI3B5SEQ42G" -> (known after apply)
+        # (1 unchanged attribute hidden)
+    }
+
+  # module.iam.aws_iam_role.ec2 must be replaced
+-/+ resource "aws_iam_role" "ec2" {
+      ~ arn                   = "arn:aws:iam::583664562769:role/realworld-dev-ec2-role" -> (known after apply)
+      ~ create_date           = "2026-07-13T11:39:32Z" -> (known after apply)
+      ~ id                    = "realworld-dev-ec2-role" -> (known after apply)
+      ~ managed_policy_arns   = [
+          - "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+        ] -> (known after apply)
+      ~ name                  = "realworld-dev-ec2-role" -> "realworld-k8s-dev-ec2-role" # forces replacement
+      + name_prefix           = (known after apply)
+      - tags                  = {} -> null
+      ~ tags_all              = {} -> (known after apply)
+      ~ unique_id             = "AROAYPZI6OJI4WOATTRO6" -> (known after apply)
+        # (6 unchanged attributes hidden)
+
+      ~ inline_policy (known after apply)
+    }
+
+  # module.iam.aws_iam_role_policy_attachment.ssm must be replaced
+-/+ resource "aws_iam_role_policy_attachment" "ssm" {
+      ~ id         = "realworld-dev-ec2-role/arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore" -> (known after apply)
+      ~ role       = "realworld-dev-ec2-role" -> "realworld-k8s-dev-ec2-role" # forces replacement
+        # (1 unchanged attribute hidden)
+    }
+
+  # module.network.aws_internet_gateway.main will be updated in-place
+  ~ resource "aws_internet_gateway" "main" {
+        id       = "igw-0fd45ed750c72bbfe"
+      ~ tags     = {
+          ~ "Environment" = "dev" -> "k8s-dev"
+            "ManagedBy"   = "Terraform"
+          ~ "Name"        = "realworld-dev-igw" -> "realworld-k8s-dev-igw"
+            "Owner"       = "DevOps"
+            "Project"     = "realworld"
+        }
+      ~ tags_all = {
+          ~ "Environment" = "dev" -> "k8s-dev"
+          ~ "Name"        = "realworld-dev-igw" -> "realworld-k8s-dev-igw"
+            # (3 unchanged elements hidden)
+        }
+      ~ vpc_id   = "vpc-06a1785f1aaafb207" -> (known after apply)
+        # (3 unchanged attributes hidden)
+    }
+
+  # module.network.aws_route_table.public must be replaced
+-/+ resource "aws_route_table" "public" {
+      ~ arn              = "arn:aws:ec2:ap-southeast-1:583664562769:route-table/rtb-077cae95cd77fd21f" -> (known after apply)
+      ~ id               = "rtb-077cae95cd77fd21f" -> (known after apply)
+      ~ owner_id         = "583664562769" -> (known after apply)
+      ~ propagating_vgws = [] -> (known after apply)
+      ~ tags             = {
+          ~ "Environment" = "dev" -> "k8s-dev"
+            "ManagedBy"   = "Terraform"
+          ~ "Name"        = "realworld-dev-public-rt" -> "realworld-k8s-dev-public-rt"
+            "Owner"       = "DevOps"
+            "Project"     = "realworld"
+        }
+      ~ tags_all         = {
+          ~ "Environment" = "dev" -> "k8s-dev"
+          ~ "Name"        = "realworld-dev-public-rt" -> "realworld-k8s-dev-public-rt"
+            # (3 unchanged elements hidden)
+        }
+      ~ vpc_id           = "vpc-06a1785f1aaafb207" -> (known after apply) # forces replacement
+        # (2 unchanged attributes hidden)
+    }
+
+  # module.network.aws_route_table_association.public must be replaced
+-/+ resource "aws_route_table_association" "public" {
+      ~ id             = "rtbassoc-0a533154379e4f607" -> (known after apply)
+      ~ route_table_id = "rtb-077cae95cd77fd21f" -> (known after apply)
+      ~ subnet_id      = "subnet-06fdcf05a65a0b9fc" -> (known after apply) # forces replacement
+        # (2 unchanged attributes hidden)
+    }
+
+  # module.network.aws_subnet.public must be replaced
+-/+ resource "aws_subnet" "public" {
+      ~ arn                                            = "arn:aws:ec2:ap-southeast-1:583664562769:subnet/subnet-06fdcf05a65a0b9fc" -> (known after apply)
+      ~ availability_zone_id                           = "apse1-az2" -> (known after apply)
+      ~ cidr_block                                     = "10.0.1.0/24" -> "10.1.1.0/24" # forces replacement
+      - enable_lni_at_device_index                     = 0 -> null
+      ~ id                                             = "subnet-06fdcf05a65a0b9fc" -> (known after apply)
+      + ipv6_cidr_block                                = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      - map_customer_owned_ip_on_launch                = false -> null
+      ~ owner_id                                       = "583664562769" -> (known after apply)
+      ~ private_dns_hostname_type_on_launch            = "ip-name" -> (known after apply)
+      ~ tags                                           = {
+          ~ "Environment" = "dev" -> "k8s-dev"
+            "ManagedBy"   = "Terraform"
+          ~ "Name"        = "realworld-dev-public-subnet" -> "realworld-k8s-dev-public-subnet"
+            "Owner"       = "DevOps"
+            "Project"     = "realworld"
+        }
+      ~ tags_all                                       = {
+          ~ "Environment" = "dev" -> "k8s-dev"
+          ~ "Name"        = "realworld-dev-public-subnet" -> "realworld-k8s-dev-public-subnet"
+            # (3 unchanged elements hidden)
+        }
+      ~ vpc_id                                         = "vpc-06a1785f1aaafb207" -> (known after apply) # forces replacement
+        # (10 unchanged attributes hidden)
+    }
+
+  # module.network.aws_vpc.main must be replaced
+-/+ resource "aws_vpc" "main" {
+      ~ arn                                  = "arn:aws:ec2:ap-southeast-1:583664562769:vpc/vpc-06a1785f1aaafb207" -> (known after apply)
+      - assign_generated_ipv6_cidr_block     = false -> null
+      ~ cidr_block                           = "10.0.0.0/16" -> "10.1.0.0/16" # forces replacement
+      ~ default_network_acl_id               = "acl-045e80fa4b3c9bafc" -> (known after apply)
+      ~ default_route_table_id               = "rtb-0023ef31c8e950a4c" -> (known after apply)
+      ~ default_security_group_id            = "sg-02c34dc6f3fec8973" -> (known after apply)
+      ~ dhcp_options_id                      = "dopt-03044676729b008a4" -> (known after apply)
+      ~ enable_network_address_usage_metrics = false -> (known after apply)
+      ~ id                                   = "vpc-06a1785f1aaafb207" -> (known after apply)
+      + ipv6_association_id                  = (known after apply)
+      + ipv6_cidr_block                      = (known after apply)
+      + ipv6_cidr_block_network_border_group = (known after apply)
+      - ipv6_netmask_length                  = 0 -> null
+      ~ main_route_table_id                  = "rtb-0023ef31c8e950a4c" -> (known after apply)
+      ~ owner_id                             = "583664562769" -> (known after apply)
+      ~ tags                                 = {
+          ~ "Environment" = "dev" -> "k8s-dev"
+            "ManagedBy"   = "Terraform"
+          ~ "Name"        = "realworld-dev-vpc" -> "realworld-k8s-dev-vpc"
+            "Owner"       = "DevOps"
+            "Project"     = "realworld"
+        }
+      ~ tags_all                             = {
+          ~ "Environment" = "dev" -> "k8s-dev"
+          ~ "Name"        = "realworld-dev-vpc" -> "realworld-k8s-dev-vpc"
+            # (3 unchanged elements hidden)
+        }
+        # (5 unchanged attributes hidden)
+    }
+
+  # module.security.aws_security_group.ec2 must be replaced
+-/+ resource "aws_security_group" "ec2" {
+      ~ arn                    = "arn:aws:ec2:ap-southeast-1:583664562769:security-group/sg-0ef7cdb54b6737b7e" -> (known after apply)
+      ~ egress                 = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = "Allow all outbound traffic"
+              - from_port        = 0
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "-1"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 0
+            },
+        ] -> (known after apply)
+      ~ id                     = "sg-0ef7cdb54b6737b7e" -> (known after apply)
+      ~ ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = "HTTP"
+              - from_port        = 80
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 80
+            },
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = "HTTPS"
+              - from_port        = 443
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 443
+            },
+          - {
+              - cidr_blocks      = [
+                  - "58.10.181.189/32",
+                ]
+              - description      = "Grafana"
+              - from_port        = 3000
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 3000
+            },
+          - {
+              - cidr_blocks      = [
+                  - "58.10.181.189/32",
+                ]
+              - description      = "Prometheus"
+              - from_port        = 9090
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 9090
+            },
+          - {
+              - cidr_blocks      = [
+                  - "58.10.181.189/32",
+                ]
+              - description      = "SSH"
+              - from_port        = 22
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 22
+            },
+        ] -> (known after apply)
+      ~ name                   = "realworld-dev-ec2-sg" -> "realworld-k8s-dev-ec2-sg" # forces replacement
+      + name_prefix            = (known after apply)
+      ~ owner_id               = "583664562769" -> (known after apply)
+      ~ tags                   = {
+          ~ "Environment" = "dev" -> "k8s-dev"
+            "ManagedBy"   = "Terraform"
+          ~ "Name"        = "realworld-dev-ec2-sg" -> "realworld-k8s-dev-ec2-sg"
+            "Owner"       = "DevOps"
+            "Project"     = "realworld"
+        }
+      ~ tags_all               = {
+          ~ "Environment" = "dev" -> "k8s-dev"
+          ~ "Name"        = "realworld-dev-ec2-sg" -> "realworld-k8s-dev-ec2-sg"
+            # (3 unchanged elements hidden)
+        }
+      ~ vpc_id                 = "vpc-06a1785f1aaafb207" -> (known after apply) # forces replacement
+        # (3 unchanged attributes hidden)
+    }
+
+  # module.security.aws_vpc_security_group_egress_rule.all must be replaced
+-/+ resource "aws_vpc_security_group_egress_rule" "all" {
+      ~ arn                    = "arn:aws:ec2:ap-southeast-1:583664562769:security-group-rule/sgr-0c8e6565fcac3cf77" -> (known after apply)
+      ~ id                     = "sgr-0c8e6565fcac3cf77" -> (known after apply)
+      ~ security_group_id      = "sg-0ef7cdb54b6737b7e" -> (known after apply) # forces replacement
+      ~ security_group_rule_id = "sgr-0c8e6565fcac3cf77" -> (known after apply)
+        # (5 unchanged attributes hidden)
+    }
+
+  # module.security.aws_vpc_security_group_ingress_rule.grafana must be replaced
+-/+ resource "aws_vpc_security_group_ingress_rule" "grafana" {
+      ~ arn                    = "arn:aws:ec2:ap-southeast-1:583664562769:security-group-rule/sgr-0d1df151340bca437" -> (known after apply)
+      ~ id                     = "sgr-0d1df151340bca437" -> (known after apply)
+      ~ security_group_id      = "sg-0ef7cdb54b6737b7e" -> (known after apply) # forces replacement
+      ~ security_group_rule_id = "sgr-0d1df151340bca437" -> (known after apply)
+        # (7 unchanged attributes hidden)
+    }
+
+  # module.security.aws_vpc_security_group_ingress_rule.http must be replaced
+-/+ resource "aws_vpc_security_group_ingress_rule" "http" {
+      ~ arn                    = "arn:aws:ec2:ap-southeast-1:583664562769:security-group-rule/sgr-024c93329fb383ba9" -> (known after apply)
+      ~ id                     = "sgr-024c93329fb383ba9" -> (known after apply)
+      ~ security_group_id      = "sg-0ef7cdb54b6737b7e" -> (known after apply) # forces replacement
+      ~ security_group_rule_id = "sgr-024c93329fb383ba9" -> (known after apply)
+        # (7 unchanged attributes hidden)
+    }
+
+  # module.security.aws_vpc_security_group_ingress_rule.https must be replaced
+-/+ resource "aws_vpc_security_group_ingress_rule" "https" {
+      ~ arn                    = "arn:aws:ec2:ap-southeast-1:583664562769:security-group-rule/sgr-027f52cb93363c066" -> (known after apply)
+      ~ id                     = "sgr-027f52cb93363c066" -> (known after apply)
+      ~ security_group_id      = "sg-0ef7cdb54b6737b7e" -> (known after apply) # forces replacement
+      ~ security_group_rule_id = "sgr-027f52cb93363c066" -> (known after apply)
+        # (7 unchanged attributes hidden)
+    }
+
+  # module.security.aws_vpc_security_group_ingress_rule.prometheus must be replaced
+-/+ resource "aws_vpc_security_group_ingress_rule" "prometheus" {
+      ~ arn                    = "arn:aws:ec2:ap-southeast-1:583664562769:security-group-rule/sgr-01593533797f45551" -> (known after apply)
+      ~ id                     = "sgr-01593533797f45551" -> (known after apply)
+      ~ security_group_id      = "sg-0ef7cdb54b6737b7e" -> (known after apply) # forces replacement
+      ~ security_group_rule_id = "sgr-01593533797f45551" -> (known after apply)
+        # (7 unchanged attributes hidden)
+    }
+
+  # module.security.aws_vpc_security_group_ingress_rule.ssh["58.10.181.189/32"] must be replaced
+-/+ resource "aws_vpc_security_group_ingress_rule" "ssh" {
+      ~ arn                    = "arn:aws:ec2:ap-southeast-1:583664562769:security-group-rule/sgr-0f116ecdaf11d38d3" -> (known after apply)
+      ~ id                     = "sgr-0f116ecdaf11d38d3" -> (known after apply)
+      ~ security_group_id      = "sg-0ef7cdb54b6737b7e" -> (known after apply) # forces replacement
+      ~ security_group_rule_id = "sgr-0f116ecdaf11d38d3" -> (known after apply)
+        # (7 unchanged attributes hidden)
+    }
+
+Plan: 17 to add, 1 to change, 16 to destroy.
+
+Changes to Outputs:
+  ~ ansible_ssm_bucket_name = "realworld-dev-ansible-ssm-583664562769" -> (known after apply)
+  ~ vpc_id                  = "vpc-06a1785f1aaafb207" -> (known after apply)
+
+─────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.

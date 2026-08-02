@@ -1,0 +1,22 @@
+plugin: amazon.aws.aws_ec2
+
+regions:
+  - ap-southeast-1
+
+profile: ansible
+
+filters:
+  tag:Project:
+    - realworld
+  tag:Environment:
+    - k8s-dev
+  instance-state-name:
+    - running
+
+hostnames:
+  - instance-id
+
+compose:
+  ansible_host: public_ip_address
+  ansible_user: '"ubuntu"'
+  ansible_ssh_private_key_file: '"/home/devops/.ssh/realworld-project-key-main.pem"'
