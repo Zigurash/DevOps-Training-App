@@ -51,6 +51,53 @@ module "ec2" {
 
   instance_profile_name = module.iam.instance_profile_name
 
+  role = "control"
+  name_suffix = "control"
+
+}
+
+module "worker1" {
+
+  source = "../../modules/ec2"
+
+  project     = var.project
+  environment = var.environment
+
+  subnet_id = module.network.public_subnet_id
+
+  security_group_id = module.security.ec2_security_group_id
+
+  instance_type = var.instance_type
+
+  key_name = var.key_name
+
+  instance_profile_name = module.iam.instance_profile_name
+
+  role = "worker"
+  name_suffix = "worker-1"
+
+}
+
+module "worker2" {
+
+  source = "../../modules/ec2"
+
+  project     = var.project
+  environment = var.environment
+
+  subnet_id = module.network.public_subnet_id
+
+  security_group_id = module.security.ec2_security_group_id
+
+  instance_type = var.instance_type
+
+  key_name = var.key_name
+
+  instance_profile_name = module.iam.instance_profile_name
+
+  role = "worker"
+  name_suffix = "worker-2"
+
 }
 
 module "ansible-ssm" {

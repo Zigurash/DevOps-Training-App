@@ -15,5 +15,5 @@ instance_type = "t3.small"
 key_name = "realworld-project-key-main"
 
 allowed_ssh_cidrs = [
-  "171.97.230.146/32"
+  "171.97.250.29/32"
 ]

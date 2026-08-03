@@ -1,0 +1,39 @@
+- name: Check kubelet.conf
+  stat:
+    path: /etc/kubernetes/kubelet.conf
+  register: kubelet_conf
+
+- name: Read join command
+  slurp:
+    src: /etc/kubernetes/kubeadm_join.sh
+  delegate_to: "{{ groups['control'][0] }}"
+  register: join_script
+
+- name: Join cluster
+  command: "{{ join_script.content | b64decode }}"
+  when: not kubelet_conf.stat.exists
+
+- name: Wait for kubelet
+  service:
+    name: kubelet
+    state: started
+
+- name: Label worker node
+  command: >
+    kubectl label node {{ inventory_hostname }}
+    node-role.kubernetes.io/worker=""
+  delegate_to: "{{ groups['control'][0] }}"
+  environment:
+    KUBECONFIG: /etc/kubernetes/admin.conf
+
+- name: Wait until node joins cluster
+  delegate_to: "{{ groups['control'][0] }}"
+  command: kubectl get nodes
+  register: cluster_nodes
+  retries: 20
+  delay: 10
+  until: inventory_hostname in cluster_nodes.stdout
+  changed_when: false
+  environment:
+    KUBECONFIG: /etc/kubernetes/admin.conf
+

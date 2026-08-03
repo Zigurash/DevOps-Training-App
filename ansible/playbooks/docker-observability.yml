@@ -1,6 +1,6 @@
 ---
 - name: Deploy observability stack
-  hosts: all
+  hosts: s
   become: true
 
   roles:

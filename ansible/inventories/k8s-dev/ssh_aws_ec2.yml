@@ -14,7 +14,9 @@ filters:
     - running
 
 hostnames:
+  - tag:Name
   - instance-id
+  
 
 compose:
   ansible_host: public_ip_address
@@ -28,3 +30,4 @@ keyed_groups:
 groups:
   control: tags.Role == "control"
   worker: tags.Role == "worker"
+  k8s_cluster: tags.Environment == "k8s-dev"

@@ -1,2 +1,2 @@
----
-# handlers file for roles/common
+- name: Reboot server
+  ansible.builtin.reboot:
