@@ -1,0 +1,11 @@
+- name: Configure kubernetes sysctl
+  copy:
+    dest: /etc/sysctl.d/99-kubernetes.conf
+    mode: "0644"
+    content: |
+      net.bridge.bridge-nt-call-iptables = 1
+      net.bridge.brigde-nt-call-ip6tables = 1
+      net.ipv4.ip_forward = 1
+  notify: Reload sysctl
+  tags:
+    - sysctl

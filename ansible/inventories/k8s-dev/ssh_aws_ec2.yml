@@ -20,3 +20,11 @@ compose:
   ansible_host: public_ip_address
   ansible_user: '"ubuntu"'
   ansible_ssh_private_key_file: '"/home/devops/.ssh/realworld-project-key-main.pem"'
+
+keyed_groups:
+  - key: tags.Environment
+    prefix: env
+
+groups:
+  control: tags.Role == "control"
+  worker: tags.Role == "worker"

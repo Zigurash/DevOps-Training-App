@@ -27,3 +27,5 @@ keyed_groups:
     prefix: env
   - key: tags.Project
     prefix: project
+  - key: tags.Role 
+    prefix: ""

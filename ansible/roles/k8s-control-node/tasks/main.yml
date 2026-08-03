@@ -1,0 +1,12 @@
+- name: Check if Kubernetes is initialized
+  ansible.builtin.stat:
+    path: /etc/kubernetes/admin.conf
+  register: kubeadm_initialized
+
+- import_tasks: pip.yml
+
+- import_tasks: cni.yml
+
+- import_tasks: kubectl.yml
+
+- import_tasks: kubeadm.yml

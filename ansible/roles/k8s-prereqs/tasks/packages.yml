@@ -1,0 +1,7 @@
+- name: Install packages required for Kubernetes repository
+  apt:
+    name:
+      - apt-transport-https
+      - gpg
+    state: present
+    update_cache: true

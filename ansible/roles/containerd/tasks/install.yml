@@ -1,0 +1,5 @@
+- name: Install containerd
+  apt:
+    name: containerd.io=1.7.*
+    state: present
+    update_cache: true

@@ -1,0 +1,11 @@
+- name: Check containerd config
+  stat:
+    path: /etc/containerd/config.toml
+  register: containerd_config
+
+- name: Configure containerd
+  template:
+    src: config.toml.j2
+    dest: /etc/containerd/config.toml
+  notify:
+    - Restart containerd

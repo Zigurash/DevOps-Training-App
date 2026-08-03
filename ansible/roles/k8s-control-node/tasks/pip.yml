@@ -1,0 +1,4 @@
+- name: Install Kubernetes Python library
+  apt:
+    name: python3-kubernetes
+    state: present

@@ -1,0 +1,9 @@
+- name: Laod overlay module
+  community.general.modprobe:
+    name: overlay
+    state: present
+
+- name: Load br_netfilter module
+  community.general.modprobe:
+    name: br_netfilter
+    state: present
