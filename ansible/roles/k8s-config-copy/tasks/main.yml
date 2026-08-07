@@ -1,0 +1,15 @@
+- name: Download kubeconfig
+  fetch:
+    src: /etc/kubernetes/admin.conf
+    dest: "{{ playbook_dir }}/../../kubernetes/kubeconfig.yaml"
+    flat: true
+  become: true
+
+- name: Replace API server address
+  delegate_to: localhost
+  become: false
+
+  replace:
+    path: "{{ playbook_dir }}/../../kubernetes/kubeconfig.yaml"
+    regexp: 'server: https://.*:6443'
+    replace: 'server: https://{{ ansible_host }}:6443'  

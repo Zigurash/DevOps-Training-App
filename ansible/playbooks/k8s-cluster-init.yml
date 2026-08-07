@@ -3,4 +3,8 @@
   become: true
 
   roles:
-    - k8s-control-node
+    - role: k8s-control-node
+      tags: k8s-control-node
+
+    - role: k8s-config-copy
+      tags: k8s-config-copy

@@ -53,6 +53,7 @@ module "ec2" {
 
   role = "control"
   name_suffix = "control"
+  enable_eip = true
 
 }
 
@@ -75,6 +76,7 @@ module "worker1" {
 
   role = "worker"
   name_suffix = "worker-1"
+  enable_eip = false
 
 }
 
@@ -97,6 +99,7 @@ module "worker2" {
 
   role = "worker"
   name_suffix = "worker-2"
+  enable_eip = false
 
 }
 

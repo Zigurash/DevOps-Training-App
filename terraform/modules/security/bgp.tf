@@ -7,3 +7,13 @@ resource "aws_security_group_rule" "calico_bgp" {
 
   self = true
 }
+
+resource "aws_security_group_rule" "calico_ipip" {
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "4"
+  security_group_id = aws_security_group.ec2.id
+
+  self = true
+}

@@ -1,68 +1,73 @@
+# =========================
 # Terraform
-**/.terraform/*
+# =========================
+**/.terraform/
 *.tfstate
 *.tfstate.*
+*.tfplan
+tfplan
 crash.log
 override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
-*.tfplan
-tfplan
 
-# Keys
-*.pem
-*.key
-*.Zone.Identifier
+# Terraform local files
+.terraform.lock.hcl
 
+# =========================
+# Kubernetes
+# =========================
+kubeconfig.yaml
+kubernetes/kubeconfig.yaml
+
+# =========================
 # AWS
+# =========================
 .aws/
 awscliv2.zip
-awscliv2.zip 
 
-# Ansible
-*.retry
+# =========================
+# Secrets / Keys
+# =========================
+*.pem
+*.key
+*.p12
+*.crt
+*.Zone.Identifier
 
-# IDE
-.vscode/
-.idea/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# APP
-node_modules
-dist
-coverage
-.env
-*.log
-.DS_Store
-application/backend/node_modules
-application/frontend/node_modules
-application/backend/dist
-application/frontend/dist
-application/backend/coverage
-application/frontend/coverage
-# Node
+# =========================
+# Node.js
+# =========================
 node_modules/
 dist/
-
-# TypeScript
+coverage/
 *.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
+# =========================
 # Environment
+# =========================
 .env
 .env.*
 !.env.example
 
-# Terraform
-.terraform/
-*.tfstate
-*.tfstate.*
-*.tfplan
-*.pem
-awscliv2.zip
-
+# =========================
 # Ansible
+# =========================
 *.retry
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db

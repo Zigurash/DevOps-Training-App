@@ -33,3 +33,8 @@ variable "role" {
 variable "name_suffix" {
   type = string
 }
+
+variable "enable_eip" {
+  type    = bool
+  default = false
+}
